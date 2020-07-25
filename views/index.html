@@ -1,52 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Metric-Imperial Conversion</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Asap&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./public/style.css" />
+  </head>
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Metric-Imperial Conversion</title>
-  <meta name="description" content="A cool thing made with HyperDev">
-  <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon"><!-- fCC favicon -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Asap&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./public/style.css">
-</head>
-
-<body>
-  <div class="container rounded">
-    <header class="text-center">
-      <h1>Metric-Imperial Units Converter</h1>
-      <h2>a project part of the Information Security and Quality Assurance certification on freeCodeCamp</h2>
-    </header>
-    <h3>Front-End:</h3>
-    <p>This API will convert units back and forth from:</p>
-    <ul>
-      <li>gallons (gal) to liters (l)</li>
-      <li>miles (mi) to kilometers (km)</li>
-      <li>pounds (lbs) to kilograms (kg)</li>
-    </ul>
-    <div id="convertDiv">
-      <form id="convertForm">
-        <input type="text" id="convertField" name="input" placeholder="3.1mi">
-        <input id="convert" type="submit" value='Convert!'>
-      </form>
-      <p id='result'></p>
-    </div>
-    <h3>Example usage:</h3>
-    <p>The API will respond to a GET request at <code>/api/convert?input=&lt;number&gt;&lt;unit&gt;</code> with a JSON
-      object
-    </p>
-    <p>
-      e.g.
-      <code><a href="/api/convert?input=4gal" target="_blank" rel="noopener noreferrer">/api/convert?input=4gal</a></code>
-      will return:
-    </p>
-    <pre>
+  <body>
+    <main class="container rounded my-3 mx-auto p-3">
+      <header class="text-center">
+        <h1 class="my-2">Metric-Imperial Units Converter</h1>
+        <small class="text-muted">
+          a project part of the Information Security and Quality Assurance
+          certification on freeCodeCamp
+        </small>
+      </header>
+      <h3 class="py-2">Front-End:</h3>
+      <p>This API will convert units back and forth from:</p>
+      <ul>
+        <li>gallons (gal) to liters (l)</li>
+        <li>miles (mi) to kilometers (km)</li>
+        <li>pounds (lbs) to kilograms (kg)</li>
+      </ul>
+      <div id="convertDiv">
+        <form id="convertForm" class="my-1">
+          <div class="form-group">
+            <label for="value">Value</label>
+            <input
+              type="number"
+              class="form-control"
+              id="value"
+              placeholder="Value"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="unit">Unit</label>
+            <select class="form-control" id="unit" required>
+              <option value="gal">Gallons</option>
+              <option value="mi">Miles</option>
+              <option value="lbs">Pounds</option>
+              <option value="l">Liters</option>
+              <option value="km">Kilometers</option>
+              <option value="kg">Kilograms</option>
+            </select>
+          </div>
+          <input id="convert" type="submit" value="Convert!" />
+        </form>
+        <p id="result"></p>
+      </div>
+      <h3 class="py-2">Example usage:</h3>
+      <p>
+        The API will respond to a GET request at
+        <code>/api/convert?input=&lt;number&gt;&lt;unit&gt;</code> with a JSON
+        object
+      </p>
+      <p>
+        e.g.
+        <code
+          ><a
+            href="/api/convert?input=4gal"
+            target="_blank"
+            rel="noopener noreferrer"
+            >/api/convert?input=4gal</a
+          ></code
+        >
+        will return:
+      </p>
+      <pre>
       <code>
         {
           initNum: 4,
@@ -57,70 +92,99 @@
         }
       </code>
     </pre>
-    <p>
-      If a valid unit is sent without a number, the API assumes a default quantity of 1 and returns the conversion.
-    </p>
-    <p>
-      If an invalid number is sent (like a double fraction), the API will respond with <code>"invalid number"</code>. If
-      an invalid unit is submitted, the response will be <code>"invalid unit"</code>. If both the number and unit are
-      invalid, the API response will be <code>"invalid number and unit"</code>
-    </p>
-    <h3>User Stories</h3>
-    <ol>
-      <li>I will help prevent the client from trying to guess(sniff) the MIME type.</li>
-      <li>I will prevent cross-site scripting (XSS) attacks.</li>
-      <li>I can <b>GET</b> <code>/api/convert</code> with a single parameter containing an accepted number and unit
-        and
-        have it converted.</li>
-      <li>Hint: Split the input by looking for the index of the first character.</li>
-      <li>I can convert 'gal' to 'L' and vice versa. <b>(1 gal to 3.78541 L)</b></li>
-      <li>I can convert 'lbs' to 'kg' and vice versa. <b>(1 lbs to 0.453592 kg)</b></li>
-      <li>I can convert 'mi' to 'km' and vice versa. <b>(1 mi to 1.60934 km)</b></li>
-      <li>If my unit of measurement is invalid, returned will be 'invalid unit'.</li>
-      <li>If my number is invalid, returned with will 'invalid number'.</li>
-      <li>If both are invalid, return will be 'invalid number and unit'.</li>
-      <li>I can use fractions, decimals or both in my parameter(ie. 5, 1/2, 2.5/6), but if nothing is provided it will
-        default to 1.</li>
-      <li>My return will consist of the initNum, initUnit, returnNum, returnUnit, and string spelling out units in
-        format <code>{initNum} {initial_Units} converts to {returnNum} {return_Units}</code> with the result rounded
-        to
-        5 decimals.</li>
-      <li>All 16 unit tests are complete and passing.</li>
-      <li>All 5 functional tests are complete and passing.</li>
-    </ol>
-  </div>
-  <footer>
-    Developed by Roberto Barreto for freeCodeCamp's
-    <a href="https://learn.freecodecamp.org/information-security-and-quality-assurance/information-security-and-quality-assurance-projects/metric-imperial-converter/"
-      target="_blank">Information Security and Quality Assurance - Metric Imperial Converter Project</a>, built upon the
-    <a href="https://github.com/freeCodeCamp/boilerplate-project-metricimpconverter/" target="_blank">provided
-      boilerplate code</a>
-    using JavaScript, Node.js, Express.js, Chai.js, Helmet.js and some Bootstrap.
-  </footer>
-  <!-- Your web-app is https, so your scripts need to be too -->
-  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-    integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
-  <script>
-    $(function () {
-      $('#convertForm').submit(function () {
-        event.preventDefault();
-        $.ajax({
-          url: '/api/convert',
-          type: 'get',
-          data: $('#convertForm').serialize(),
-          success: function (data) {
-            if (data.error) {
-              $('#result').text(data.error);
-            } else {
-              $('#result').text('');
-              $('#result').append('<a href="/api/convert?input=' + data.initNum + '' + data.initUnit + '" target="_blank">' + data.string + '</a>');
-            }
-            //$('#jsonResult').text(JSON.stringify(data));
-          }
-        });
+      <p>
+        If a valid unit is sent without a number, the API assumes a default
+        quantity of 1 and returns the conversion.
+      </p>
+      <p>
+        If an invalid number is sent (like a double fraction), the API will
+        respond with <code>"invalid number"</code>. If an invalid unit is
+        submitted, the response will be <code>"invalid unit"</code>. If both the
+        number and unit are invalid, the API response will be
+        <code>"invalid number and unit"</code>
+      </p>
+      <h3 class="py-2">User Stories</h3>
+      <ol>
+        <li>
+          I will help prevent the client from trying to guess(sniff) the MIME
+          type.
+        </li>
+        <li>I will prevent cross-site scripting (XSS) attacks.</li>
+        <li>
+          I can <b>GET</b> <code>/api/convert</code> with a single parameter
+          containing an accepted number and unit and have it converted.
+        </li>
+        <li>
+          Hint: Split the input by looking for the index of the first character.
+        </li>
+        <li>
+          I can convert 'gal' to 'L' and vice versa. <b>(1 gal to 3.78541 L)</b>
+        </li>
+        <li>
+          I can convert 'lbs' to 'kg' and vice versa.
+          <b>(1 lbs to 0.453592 kg)</b>
+        </li>
+        <li>
+          I can convert 'mi' to 'km' and vice versa. <b>(1 mi to 1.60934 km)</b>
+        </li>
+        <li>
+          If my unit of measurement is invalid, returned will be 'invalid unit'.
+        </li>
+        <li>If my number is invalid, returned with will 'invalid number'.</li>
+        <li>If both are invalid, return will be 'invalid number and unit'.</li>
+        <li>
+          I can use fractions, decimals or both in my parameter(ie. 5, 1/2,
+          2.5/6), but if nothing is provided it will default to 1.
+        </li>
+        <li>
+          My return will consist of the initNum, initUnit, returnNum,
+          returnUnit, and string spelling out units in format
+          <code
+            >{initNum} {initial_Units} converts to {returnNum}
+            {return_Units}</code
+          >
+          with the result rounded to 5 decimals.
+        </li>
+        <li>All 16 unit tests are complete and passing.</li>
+        <li>All 5 functional tests are complete and passing.</li>
+      </ol>
+    </main>
+    <footer class="text-center py-2">
+      <div class="container">
+        Developed by Roberto Barreto for freeCodeCamp's
+        <a
+          href="https://learn.freecodecamp.org/information-security-and-quality-assurance/information-security-and-quality-assurance-projects/metric-imperial-converter/"
+          target="_blank"
+          >Information Security and Quality Assurance - Metric Imperial
+          Converter Project</a
+        >, built upon the
+        <a
+          href="https://github.com/freeCodeCamp/boilerplate-project-metricimpconverter/"
+          target="_blank"
+          >provided boilerplate code</a
+        >
+        using JavaScript, Node.js, Express.js, Chai.js, Helmet.js and some
+        Bootstrap.
+      </div>
+    </footer>
+    <script>
+      const convertForm = document.querySelector('#convertForm');
+      const valueEl = document.querySelector('#value');
+      const unitEl = document.querySelector('#unit');
+      const resultEl = document.querySelector('#result');
+      convertForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        const res = await fetch(
+          `/api/convert?input=${valueEl.value}${unitEl.value}`
+        );
+        const data = await res.json();
+        if (data.error) {
+          resultEl.innerText = data.error;
+        } else {
+          resultEl.innerText = '';
+          resultEl.innerHTML = `<a href="/api/convert?input=${data.initNum}${data.initUnit}" target="_blank">${data.string}</a>`;
+        }
       });
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
